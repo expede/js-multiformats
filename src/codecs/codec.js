@@ -1,16 +1,31 @@
 // @ts-check
 
 /**
+ * @template {number} Code
+ * @template T
+ * @typedef {import('./interface').BlockCodec<Code, T>} BlockCodec
+ */
+/**
+ * @template {number} Code
+ * @template T
+ * @typedef {import('./interface').BlockEncoder<Code, T>} BlockEncoder
+ */
+/**
+ * @template {number} Code
+ * @template T
+ * @typedef {import('./interface').BlockDecoder<Code, T>} BlockDecoder
+ */
+
+/**
  * @template {string} Name
  * @template {number} Code
  * @template T
- *
  * @param {Object} options
  * @param {Name} options.name
  * @param {Code} options.code
  * @param {(data:T) => Uint8Array} options.encode
  * @param {(bytes:Uint8Array) => T} options.decode
- * @returns {import('./interface').BlockCodec<Code, T>}
+ * @returns {BlockCodec<Code, T> & { encoder: BlockEncoder<Code, T>, decoder: BlockDecoder<Code, T> }}
  */
 export const codec = ({ name, code, decode, encode }) => {
   const decoder = new Decoder(name, code, decode)
@@ -18,12 +33,6 @@ export const codec = ({ name, code, decode, encode }) => {
 
   return { name, code, decode, encode, decoder, encoder }
 }
-
-/**
- * @template {number} Code
- * @template T
- * @typedef {import('./interface').BlockEncoder<Code, T>} BlockEncoder
- */
 
 /**
  * @class
@@ -44,12 +53,6 @@ export class Encoder {
     this.encode = encode
   }
 }
-
-/**
- * @template {number} Code
- * @template T
- * @typedef {import('./interface').BlockDecoder<Code, T>} BlockDecoder
- */
 
 /**
  * @class

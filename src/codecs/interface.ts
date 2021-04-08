@@ -20,14 +20,11 @@ export interface BlockDecoder<Code extends number, T> {
  * separate those capabilties as sender requires encoder and receiver
  * requires decoder.
  */
-export interface BlockCodec<Code extends number, T> extends BlockEncoder<Code, T>, BlockDecoder<Code, T> {
-  encoder: BlockEncoder<Code, T>,
-  decoder: BlockDecoder<Code, T>
-}
+export interface BlockCodec<Code extends number, T> extends BlockEncoder<Code, T>, BlockDecoder<Code, T> {}
 
 
-// This just a hack to retain type information abouth the data that
-// is incoded `T`  Because it's a union `data` field is never going
+// This just a hack to retain type information about the data that
+// is encoded `T`  Because it's a union `data` field is never going
 // to be usable anyway.
 export type ByteView<T> =
   | Uint8Array
